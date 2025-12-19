@@ -6,3 +6,4 @@ pydantic
 aio_pika
 pydantic-settings
 alembic
+pytest
