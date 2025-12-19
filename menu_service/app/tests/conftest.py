@@ -2,20 +2,21 @@ import pytest
 from fastapi.testclient import TestClient
 
 from menu_service.app.main import app
-from menu_service.app.endpoints import menu_router
+from menu_service.app.endpoints.menu_router import menu_db, cart_db
 
 
 @pytest.fixture(autouse=True)
 def clear_db():
-    menu_router.menu_db.clear()
-    menu_router.cart_db.clear()
+    """
+    Reset database BEFORE and AFTER every test
+    """
+    menu_db.clear()
+    cart_db.clear()
     yield
-    menu_router.menu_db.clear()
-    menu_router.cart_db.clear()
+    menu_db.clear()
+    cart_db.clear()
 
 
 @pytest.fixture
 def client():
-    menu_router.menu_db.clear()
-    menu_router.cart_db.clear()
     return TestClient(app)
