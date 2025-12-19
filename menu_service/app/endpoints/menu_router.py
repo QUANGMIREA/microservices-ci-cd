@@ -22,7 +22,7 @@ def get_menu():
 def choose_item(item_id: str):
     item = next((i for i in menu_db if i.id == item_id), None)
     if item is None:
-        # CHÚ Ý dấu chấm cuối câu để khớp test
+        # chú ý dấu chấm .
         return {"message": "Item not found."}
 
     cart_db.append(item)
@@ -36,5 +36,6 @@ def view_cart():
 
 @router.get("/drinks/")
 def get_drinks():
-    drinks = [item for item in menu_db if (item.type or "").lower() == "drink"]
+    # giữ MenuItem object, không dùng item.get(...)
+    drinks = [item for item in menu_db if item.type.lower() == "drink"]
     return {"drinks": drinks}
