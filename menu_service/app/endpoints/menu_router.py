@@ -3,15 +3,14 @@ from menu_service.app.models.menu_item import MenuItem
 
 router = APIRouter(prefix="/menu", tags=["Menu"])
 
-menu_db = []
-cart_db = []
+menu_db: list[MenuItem] = []
+cart_db: list[MenuItem] = []
 
 
 @router.post("/")
 def add_menu_item(item: MenuItem):
-    item_dict = item.model_dump()   # 🔥 QUAN TRỌNG
-    menu_db.append(item_dict)
-    return {"message": "Item added successfully", "item": item_dict}
+    menu_db.append(item)
+    return {"message": "Item added successfully", "item": item}
 
 
 @router.get("/")
@@ -21,7 +20,7 @@ def get_menu():
 
 @router.post("/choose_item/{item_id}")
 def choose_item(item_id: str):
-    item = next((i for i in menu_db if i["id"] == item_id), None)
+    item = next((i for i in menu_db if i.id == item_id), None)
     if item is None:
         return {"message": "Item not found."}
 
@@ -36,5 +35,5 @@ def view_cart():
 
 @router.get("/drinks/")
 def get_drinks():
-    drinks = [item for item in menu_db if item.get("type") == "drink"]
+    drinks = [item for item in menu_db if item.type == "drink"]
     return {"drinks": drinks}
