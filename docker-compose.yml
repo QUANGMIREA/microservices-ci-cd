@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: coffee
+    ports:
+      - "5432:5432"
+
+  orders-service:
+    build: ./orders_service
+    ports:
+      - "8001:80"
+    environment:
+      - POSTGRES_URL=postgresql://user:pass@postgres:5432/coffee
+
+  menu-service:
+    build: ./menu_service
+    ports:
+      - "8002:80"

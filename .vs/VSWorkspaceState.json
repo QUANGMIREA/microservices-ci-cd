@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\menu_service",
+    "\\menu_service\\app",
+    "\\menu_service\\app\\endpoints",
+    "\\menu_service\\tests",
+    "\\orders_service",
+    "\\orders_service\\app",
+    "\\orders_service\\app\\tests",
+    "\\orders_service\\app\\tests\\__pycache__",
+    "\\orders_service\\tests"
+  ],
+  "SelectedNode": "\\orders_service\\tests\\test_orders_integration.py",
+  "PreviewInSolutionExplorer": false
+}
