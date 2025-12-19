@@ -7,3 +7,4 @@ aio_pika
 pydantic-settings
 alembic
 pytest
+httpx
