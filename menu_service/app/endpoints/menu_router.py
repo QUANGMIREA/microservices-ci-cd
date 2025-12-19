@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from menu_service.app.models.menu_item import MenuItem
+from app.models.menu_item import MenuItem
 
 router = APIRouter(prefix="/menu", tags=["Menu"])
 
