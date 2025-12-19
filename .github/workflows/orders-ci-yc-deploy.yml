@@ -1,6 +1,6 @@
 name: orders-service CI -> YC Registry -> Serverless Deploy
 
-'on':
+on:
   push:
     branches: ["main"]
   pull_request:
@@ -45,6 +45,26 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test-build-push]
     steps:
+      # ===== DEBUG 1: kiểm tra YC_SA_ID có bị sai / xuống dòng =====
+      - name: Debug YC_SA_ID (safe)
+        run: |
+          python - <<'EOF'
+          import os
+          v = os.getenv("YC_SA_ID", "")
+          print("YC_SA_ID repr:", repr(v))
+          print("YC_SA_ID length:", len(v))
+          EOF
+        env:
+          YC_SA_ID: ${{ secrets.YC_SA_ID }}
+
+      # ===== DEBUG 2: kiểm tra service account có tồn tại trong folder không =====
+      - name: Verify service accounts in folder
+        uses: yc-actions/yc-cli@v2
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_KEYS }}
+          args: iam service-account list --folder-id ${{ secrets.YC_FOLDER_ID }}
+
+      # ===== DEPLOY THẬT =====
       - name: Deploy to Yandex Serverless Containers
         uses: yc-actions/yc-sls-container-deploy@v1
         with:
