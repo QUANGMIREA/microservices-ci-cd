@@ -23,7 +23,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pytest -q
+          pip install pytest httpx
+          python -m pytest -q tests
+
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -38,3 +40,4 @@ jobs:
       - name: Push image to DockerHub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/menu-service:latest
+
